@@ -504,6 +504,7 @@ struct ProgenitorData
             for (int i=0;i<NumberofProgenitors;i++) nsharedfrac[i]=p.nsharedfrac[i];
         }
         istep=p.istep;
+        return *this;
     }
 
 };
@@ -608,6 +609,7 @@ struct DescendantData
             for (int i=0;i<NumberofDescendants;i++) nsharedfrac[i]=d.nsharedfrac[i];
         }
         istep=d.istep;
+        return *this;
     }
 
 };
@@ -686,6 +688,7 @@ struct DescendantDataProgenBased
             removalhalotemporalindex[i]=d.removalhalotemporalindex[i];
         }
 #endif
+        return *this;
     }
     ///Determine optimal descendent using a temporally weighted merit, and set it to position 0
     ///start with just maximum merit, ignoring when this was found
@@ -873,6 +876,7 @@ struct ProgenitorDataDescenBased
             removalhalotemporalindex[i]=d.removalhalotemporalindex[i];
         }
 #endif
+        return *this;
     }
     ///Determine optimal descendent using a temporally weighted merit, and set it to position 0
     ///start with just maximum merit, ignoring when this was found
