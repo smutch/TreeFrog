@@ -32,7 +32,15 @@ project(TreeFrog VERSION ${TF_VERSION} LANGUAGES ${TF_LANGS})
 set(CMAKE_CXX_STANDARD 11)
 
 # Optimisation and debug flags
-set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type.")
+set(default_build_type "Debug")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 if(CMAKE_BUILD_TYPE EQUAL "Debug")
     set(SANITIZE_FLAGS "-fsanitize=address,leak,undefined -fno-common -fno-omit-frame-pointer")
 else()
@@ -44,6 +52,9 @@ set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} ${SANITIZE_FLAGS}")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native -O3 -ffast-math")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native -O3 -ffast-math")
 set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} -Wall -Werror=implicit -march=native -O3 -ffast-math")
+
+# Generate the compile_commands.json file. Useful for editors and language servers.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Command-line treefrog-specific options
 #
